@@ -1,0 +1,83 @@
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /api/v1
+
+spring:
+  application:
+    name: family-league
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/family_league}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 300000
+      connection-timeout: 20000
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    open-in-view: false
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  cache:
+    type: caffeine
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:ZmFtaWx5LWxlYWd1ZS1zZWNyZXQta2V5LXRoYXQtaXMtYXQtbGVhc3Qtc2l4dHktZm91ci1jaGFyYWN0ZXJzLWxvbmc=}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+  prediction:
+    league-lock-hours: 4
+    match-lock-hours: 1
+    reminder-hours-before-match: 2
+  notification:
+    admin-email: ${ADMIN_EMAIL:admin@familyleague.com}
+    from-email: ${FROM_EMAIL:noreply@familyleague.com}
+    max-retry-count: 3
+  scheduler:
+    prediction-lock-cron: "0 * * * * *"
+    email-process-cron: "0 */5 * * * *"
+    result-alert-cron: "0 */5 * * * *"
+  result:
+    pending-alert-hours: 2
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  health:
+    mail:
+      enabled: false
+
+logging:
+  level:
+    com.familyleague: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  file:
+    name: logs/family-league.log

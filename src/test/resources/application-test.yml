@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    url: jdbc:tc:postgresql:15:///family_league_test
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+  mail:
+    username: ""
+  cache:
+    type: none
+
+app:
+  jwt:
+    secret: dGVzdC1zZWNyZXQta2V5LWZvci1mYW1pbHktbGVhZ3VlLXRlc3RpbmctcHVycG9zZXMtb25seS1taW4tNjQtY2hhcnM=
+    expiration-ms: 3600000
+  prediction:
+    league-lock-hours: 4
+    match-lock-hours: 1
+    reminder-hours-before-match: 2
+  notification:
+    admin-email: test-admin@familyleague.com
+    from-email: test@familyleague.com
+    max-retry-count: 3
+  scheduler:
+    prediction-lock-cron: "-"
+    email-process-cron: "-"
+    result-alert-cron: "-"
+
+logging:
+  level:
+    com.familyleague: WARN

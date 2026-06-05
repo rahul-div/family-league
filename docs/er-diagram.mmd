@@ -1,0 +1,36 @@
+erDiagram
+    USERS ||--o{ MATCH_PREDICTIONS : "makes"
+    USERS ||--o{ LEAGUE_PREDICTIONS : "makes"
+    USERS ||--o{ MATCH_SCORE_DETAILS : "earns"
+    USERS ||--o{ SEASON_SCORE_DETAILS : "earns"
+    USERS ||--o{ USER_SEASON_SCORES : "has"
+    USERS ||--o{ EMAIL_NOTIFICATIONS : "receives"
+
+    LEAGUES ||--o{ SEASONS : "contains"
+
+    SEASONS ||--o{ SEASON_TEAMS : "enrolls"
+    SEASONS ||--o{ MATCHES : "hosts"
+    SEASONS ||--o{ LEAGUE_STANDINGS : "tracks"
+    SEASONS ||--o{ LEAGUE_PREDICTIONS : "predicted in"
+    SEASONS ||--o{ MATCH_SCORE_DETAILS : "scored in"
+    SEASONS ||--o{ SEASON_SCORE_DETAILS : "scored in"
+    SEASONS ||--o{ USER_SEASON_SCORES : "ranked in"
+
+    TEAMS ||--o{ PLAYERS : "has"
+    TEAMS ||--o{ SEASON_TEAMS : "enrolled in"
+    TEAMS ||--o{ LEAGUE_STANDINGS : "stands in"
+
+    MATCHES ||--|| MATCH_RESULTS : "has result"
+    MATCHES ||--o{ MATCH_PREDICTIONS : "predicted"
+    MATCHES }o--|| TEAMS : "home team"
+    MATCHES }o--|| TEAMS : "away team"
+
+    MATCH_RESULTS }o--o| TEAMS : "winner"
+    MATCH_RESULTS }o--o| TEAMS : "toss winner"
+    MATCH_RESULTS }o--o| PLAYERS : "POTM"
+
+    MATCH_PREDICTIONS }o--o| TEAMS : "predicted winner"
+    MATCH_PREDICTIONS }o--o| TEAMS : "predicted toss"
+    MATCH_PREDICTIONS }o--o| PLAYERS : "predicted POTM"
+
+    LEAGUE_PREDICTIONS }o--|| TEAMS : "team"

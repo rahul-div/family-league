@@ -1,0 +1,7 @@
+server:
+  port: ${SERVER_PORT:8443}
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-type: ${SSL_KEYSTORE_TYPE:PKCS12}
+    key-store-password: ${SSL_KEYSTORE_PASSWORD:changeit}
+    key-alias: ${SSL_KEY_ALIAS:familyleague}
